@@ -6,10 +6,8 @@ import os
 load_dotenv()
 # GPT_KEY_LEO
 # GPT_KEY_NATAS
-client = openai(api_key = os.getenv("GPT_KEY_LEO")) 
+client = openai(api_key = os.getenv("GPT_KEY_NATAS")) 
 pc_api = api(region="us")
-
-print(client)
 
 specialization_prompt = "You are a specialized assistant for computer specifications."
 
@@ -64,12 +62,16 @@ def chatbot_response(user_input):
   else:
     return generate_response("You are a specialized assistant in computer specifications. " + user_input)
 
-# Example interactions
-user_input = "Can you help me understand computer parts?"
-print(chatbot_response(user_input))
+def main():
+  print("Welcome to the Computer Hardware Chatbot!")
+  print("Type 'exit' to end the chat.")
+  while True:
+    user_input = input("You: ")
+    if user_input.lower() == 'exit':
+      print("Goodbye!")
+      break
+    response = chatbot_response(user_input)
+    print("Assistant:", response)
 
-user_input = "Can you help me select parts for a gaming PC?"
-print(chatbot_response(user_input))
-
-user_input = "How do I build a computer system?"
-print(chatbot_response(user_input))
+if __name__ == "__main__":
+  main()
