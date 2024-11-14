@@ -15,7 +15,7 @@ def generate_response(prompt):
     response = client.generate(
         model="command-xlarge",
         prompt=prompt,
-        max_tokens=150,
+        max_tokens=1500,
         temperature=0.5
     )
     return response.generations[0].text.strip()
