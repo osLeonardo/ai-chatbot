@@ -1,3 +1,3 @@
-pcpartpicker
 python-dotenv
+pcpartpicker
 cohere

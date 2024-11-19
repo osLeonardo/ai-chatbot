@@ -1,5 +1,5 @@
-from pcpartpicker import API
 from dotenv import load_dotenv
+from pcpartpicker import API
 import cohere
 import os
 
