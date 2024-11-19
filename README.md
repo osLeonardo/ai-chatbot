@@ -44,7 +44,9 @@ The chatbot supports the following part categories:
     # Using HTTPS
     git clone https://github.com/osLeonardo/ai-chatbot.git
     cd ai-chatbot
+    ```
 
+    ```sh
     # Using SSH
     git clone git@github.com:osLeonardo/ai-chatbot.git
     cd ai-chatbot
@@ -59,7 +61,7 @@ The chatbot supports the following part categories:
     - Go to the [Cohere website](https://cohere.ai/) and sign up for an account.
     - Navigate to the API section and generate a new API key.
 
-4. Create a `.env` file in the root directory and add your Cohere API key:
+4. Edit the `.env` file in the root directory with your Cohere API key:
     ```env
     COHERE_KEY="your_cohere_api_key"
     ```
@@ -72,14 +74,14 @@ The chatbot supports the following part categories:
     ```
 
 2. Interact with the chatbot by typing your questions about computer parts and PC building. For example:
-    ```
+    ```sh
     > You: What are some good CPUs?
     ```
 
 3. To exit the chat, type `exit`.
 
 ## Example
-  ```
+  ```sh
   =========================================
   Welcome to the Computer Hardware Chatbot!
   =========================================
