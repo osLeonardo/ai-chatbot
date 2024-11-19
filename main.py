@@ -6,7 +6,7 @@ import os
 load_dotenv()
 
 pc_api = API("us")
-client = cohere.Client(os.getenv("COHERE_KEY_NATAS"))
+client = cohere.Client(os.getenv("COHERE_KEY"))
 part_categories = {'wireless-network-card', 'case-fan', 'cpu', 'cpu-cooler', 'headphones', 'motherboard', 'monitor', 'internal-hard-drive', 'external-hard-drive', 'ups', 'fan-controller', 'case', 'keyboard', 'mouse', 'wired-network-card', 'sound-card', 'video-card', 'speakers', 'optical-drive', 'power-supply', 'thermal-paste', 'memory'}
 
 def clear_terminal():
