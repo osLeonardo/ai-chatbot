@@ -1,41 +1,25 @@
-from pcpartpicker import API as api
-from openai import OpenAI as openai
+from pcpartpicker import API
 from dotenv import load_dotenv
+import cohere
 import os
 
 load_dotenv()
-# GPT_KEY_LEO
-# GPT_KEY_NATAS
-client = openai(api_key = os.getenv("GPT_KEY_NATAS")) 
-pc_api = api(region="us")
 
-specialization_prompt = "You are a specialized assistant for computer specifications."
+pc_api = API("us")
+client = cohere.Client(os.getenv("COHERE_KEY"))
+part_categories = {'wireless-network-card', 'case-fan', 'cpu', 'cpu-cooler', 'headphones', 'motherboard', 'monitor', 'internal-hard-drive', 'external-hard-drive', 'ups', 'fan-controller', 'case', 'keyboard', 'mouse', 'wired-network-card', 'sound-card', 'video-card', 'speakers', 'optical-drive', 'power-supply', 'thermal-paste', 'memory'}
+
+def clear_terminal():
+  os.system('clear')
 
 def generate_response(prompt):
-  response = client.chat.completions.create(
-    messages=[
-      {
-        "role": "system",
-        "content":
-          {
-            "type": "text",
-            "text": specialization_prompt
-          }
-      },
-      {
-        "role": "user",
-        "content":
-          {
-            "type": "text",
-            "text": prompt
-          }
-      }
-    ],
-    model="gpt-3.5-turbo",
-    max_tokens=150,
+  response = client.generate(
+    model="command-xlarge",
+    prompt=prompt,
+    max_tokens=1500,
     temperature=0.5
   )
-  return response['choices'][0]['message']['content'].strip()
+  return response.generations[0].text.strip()
 
 def get_part_info(part_type):
   try:
@@ -44,34 +28,36 @@ def get_part_info(part_type):
   except Exception as e:
     return str(e)
 
+def identify_part_category(user_input):
+  for category in part_categories:
+    if category.replace('-', ' ') in user_input.lower():
+      return category
+  return None
+
 def chatbot_response(user_input):
-  if "understand computer parts" in user_input.lower():
-    return generate_response("You are a specialized assistant in understanding computer parts. " + user_input)
-  
-  elif "select parts" in user_input.lower():
-    parts_data = get_part_info("cpu")  # Example part type
-    if parts_data:
-      return f"Here are some CPUs you can consider: {parts_data}"
-    
+    part_category = identify_part_category(user_input)
+    if part_category:
+        parts_data = get_part_info(part_category)
+        if parts_data:
+            return f"Here are some {part_category.replace('-', ' ')}s you can consider: {parts_data}"
+        else:
+            return "Sorry, I couldn't retrieve parts data at the moment."
     else:
-      return "Sorry, I couldn't retrieve parts data at the moment."
-  
-  elif "build a system" in user_input.lower():
-    return generate_response("You are a specialized assistant in building computer systems. " + user_input)
-  
-  else:
-    return generate_response("You are a specialized assistant in computer specifications. " + user_input)
+        return generate_response("You are a specialized assistant in computer parts. " + user_input)
 
 def main():
-  print("Welcome to the Computer Hardware Chatbot!")
-  print("Type 'exit' to end the chat.")
+  clear_terminal()
+  print("\033[1;36m=========================================")
+  print("\n\033[1;35mWelcome to the Computer Hardware Chatbot!")
+  print("\n\033[1;36m=========================================")
+  print("\n\033[1;31m\n- Type '\033[0;33mexit\033[1;31m' to end the chat.")
   while True:
-    user_input = input("You: ")
+    user_input = input("\033[1;32m\n> You: \033[0m")
     if user_input.lower() == 'exit':
-      print("Goodbye!")
+      print("\n\033[1;36m> Assistant: \033[0mGoodbye!\n")
       break
     response = chatbot_response(user_input)
-    print("Assistant:", response)
+    print("\n\033[1;36m> Assistant: \033[0m", response)
 
 if __name__ == "__main__":
   main()
