@@ -1,5 +1,9 @@
 # Computer Hardware Chatbot
 
+# Contributors
+- Natanael Alves
+- Leonardo Spilere
+
 ## Overview
 
 The Computer Hardware Chatbot is a specialized assistant designed to help users with questions about computer parts and PC building. It uses the `pcpartpicker` library to retrieve data about various computer components and provides relevant information based on user queries. The chatbot can answer general questions about computers and provide specific details about different parts.
